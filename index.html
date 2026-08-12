@@ -85,10 +85,19 @@
   .slot:disabled { opacity:1; }
 
   #childResult {
-    margin-top:12px; border:2px dashed var(--green); border-radius:12px;
-    background:var(--green-bg); padding:12px 16px; font-size:17px; display:none;
+    margin-top:14px; border:2.5px dashed var(--green); border-radius:14px;
+    background:var(--green-bg); padding:16px 16px 18px; display:none;
+    text-align:center; position:relative;
   }
-  #childResult b.sex { font-size:19px; }
+  #childResult.show { animation:pop .5s cubic-bezier(.34,1.56,.64,1); }
+  .birth-emoji { font-size:54px; line-height:1.15; display:inline-block; animation:bounce .9s ease .35s 2; }
+  .birth-title { font-size:24px; font-weight:800; color:var(--green); margin-top:2px; }
+  .birth-geno  { font-size:19px; margin-top:6px; }
+  .birth-geno b { color:var(--blue); }
+  @keyframes pop    { from { transform:scale(.55); opacity:0; } to { transform:scale(1); opacity:1; } }
+  @keyframes bounce { 0%,100% { transform:translateY(0); } 40% { transform:translateY(-12px); } }
+  .confetti { position:absolute; bottom:20%; pointer-events:none; animation:rise 1.4s ease-out forwards; }
+  @keyframes rise { 0% { transform:translateY(0) rotate(0deg); opacity:1; } 100% { transform:translateY(-110px) rotate(45deg); opacity:0; } }
 
   /* ── 버튼 ── */
   .btn {
@@ -343,11 +352,29 @@ function checkDone(){
   if (!keys.every(function(k){ return cur[k] !== undefined; })) return;
   var c = makeChild(cur);
   var box = document.getElementById('childResult');
-  box.style.display = 'block';
   box.innerHTML =
-    '<b class="sex">' + (c.sex==='딸' ? '👧 딸' : '👦 아들') + '</b>이 태어났다! &nbsp; ' +
-    '유전자형 — (가) <b>' + c.ga + '</b> · (나) <b>' + c.na + '</b> · (다) <b>' + daHTML(c) + '</b>';
+    '<div class="birth-emoji">' + (c.sex==='딸' ? '👧' : '👦') + '</div>' +
+    '<div class="birth-title">' + c.sex + '이 태어났다!</div>' +
+    '<div class="birth-geno">(가) <b>' + c.ga + '</b> &nbsp;·&nbsp; (나) <b>' + c.na + '</b> &nbsp;·&nbsp; (다) <b>' + daHTML(c) + '</b></div>';
+  box.style.display = 'block';
+  box.classList.remove('show'); void box.offsetWidth; box.classList.add('show');
+  burst(box);
   document.getElementById('btnRecord').disabled = false;
+}
+
+// 탄생 색종이 효과 (가볍게 10조각, 끝나면 제거)
+function burst(box){
+  var em = ['🎉','✨','🎊','⭐'];
+  for (var i=0; i<10; i++){
+    var s = document.createElement('span');
+    s.className = 'confetti';
+    s.textContent = em[i % em.length];
+    s.style.left = (6 + Math.random()*88) + '%';
+    s.style.animationDelay = (Math.random()*0.25) + 's';
+    s.style.fontSize = (14 + Math.random()*14) + 'px';
+    box.appendChild(s);
+    setTimeout((function(el){ return function(){ el.remove(); }; })(s), 1800);
+  }
 }
 
 function makeChild(cu){
