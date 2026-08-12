@@ -65,6 +65,11 @@
   .parent.dad .pname { color:var(--dad); }
   .parent .pgeno { font-size:15px; color:var(--sub); margin-bottom:10px; }
   .slots { display:flex; justify-content:center; gap:10px; }
+  .slot-col { display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .slot-cap { font-size:14px; font-weight:700; line-height:1.2; }
+  .slot-cap.red    { color:var(--red); }
+  .slot-cap.blue   { color:var(--blue); }
+  .slot-cap.yellow { color:var(--yellow); }
   .slot {
     width:76px; height:96px; border-radius:10px; border:2px solid;
     font-size:22px; font-weight:700; cursor:pointer;
@@ -183,18 +188,24 @@
         <div class="pname">👩 어머니의 컵</div>
         <div class="pgeno">Aa · Bb · X<sup>D</sup>X<sup>d</sup></div>
         <div class="slots">
-          <button class="slot red"    id="s_m_red"    onclick="draw('m','red')"><span>?</span><span class="lab">(가)</span></button>
-          <button class="slot blue"   id="s_m_blue"   onclick="draw('m','blue')"><span>?</span><span class="lab">(나)</span></button>
-          <button class="slot yellow" id="s_m_yellow" onclick="draw('m','yellow')"><span>?</span><span class="lab">(다)</span></button>
+          <div class="slot-col"><div class="slot-cap red">빨간 막대</div>
+            <button class="slot red"    id="s_m_red"    onclick="draw('m','red')"><span>?</span><span class="lab">(가)</span></button></div>
+          <div class="slot-col"><div class="slot-cap blue">파란 막대</div>
+            <button class="slot blue"   id="s_m_blue"   onclick="draw('m','blue')"><span>?</span><span class="lab">(나)</span></button></div>
+          <div class="slot-col"><div class="slot-cap yellow">노란 막대</div>
+            <button class="slot yellow" id="s_m_yellow" onclick="draw('m','yellow')"><span>?</span><span class="lab">(다)</span></button></div>
         </div>
       </div>
       <div class="parent dad">
         <div class="pname">👨 아버지의 컵</div>
         <div class="pgeno">Aa · Bb · X<sup>d</sup>Y</div>
         <div class="slots">
-          <button class="slot red"    id="s_d_red"    onclick="draw('d','red')"><span>?</span><span class="lab">(가)</span></button>
-          <button class="slot blue"   id="s_d_blue"   onclick="draw('d','blue')"><span>?</span><span class="lab">(나)</span></button>
-          <button class="slot yellow" id="s_d_yellow" onclick="draw('d','yellow')"><span>?</span><span class="lab">(다)·성별</span></button>
+          <div class="slot-col"><div class="slot-cap red">빨간 막대</div>
+            <button class="slot red"    id="s_d_red"    onclick="draw('d','red')"><span>?</span><span class="lab">(가)</span></button></div>
+          <div class="slot-col"><div class="slot-cap blue">파란 막대</div>
+            <button class="slot blue"   id="s_d_blue"   onclick="draw('d','blue')"><span>?</span><span class="lab">(나)</span></button></div>
+          <div class="slot-col"><div class="slot-cap yellow">노란 막대</div>
+            <button class="slot yellow" id="s_d_yellow" onclick="draw('d','yellow')"><span>?</span><span class="lab">(다)·성별</span></button></div>
         </div>
       </div>
     </div>
