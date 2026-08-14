@@ -349,8 +349,8 @@
     </div>
 
     <div class="q">
-      <div class="qt">💡 더 해보기 — 이 부모 사이에서 자녀 100명이 태어난다면?</div>
-      <button class="btn" onclick="runSim()">가상 자녀 100명 시뮬레이션</button>
+      <div class="qt">💡 더 해보기 — 이 부모 사이에서 자녀 10,000명이 태어난다면?</div>
+      <button class="btn" onclick="runSim()">가상 자녀 10,000명 시뮬레이션</button>
       <div id="simOut">
         <table class="rec">
           <thead>
@@ -589,8 +589,10 @@ function toggleAns(btn){
   btn.textContent = open ? '모범답안 보기' : '모범답안 닫기';
 }
 
+function comma(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
 function runSim(){
-  var N = 100, stat = { '딸':{n:0, ga:0, da:0}, '아들':{n:0, ga:0, da:0} };
+  var N = 10000, stat = { '딸':{n:0, ga:0, da:0}, '아들':{n:0, ga:0, da:0} };
   for (var i=0; i<N; i++){
     var cu = {};
     ['m','d'].forEach(function(w){
@@ -603,10 +605,10 @@ function runSim(){
   }
   var html = '';
   ['딸','아들'].forEach(function(sex){
-    var s = stat[sex], pct = function(k){ return s.n ? Math.round(100*k/s.n) + '%' : '-'; };
-    html += '<tr><td><b>' + (sex==='딸' ? '👧 딸' : '👦 아들') + '</b></td><td>' + s.n + '명</td>'
-          + '<td>' + s.ga + '명 (' + pct(s.ga) + ')</td>'
-          + '<td>' + s.da + '명 (' + pct(s.da) + ')</td></tr>';
+    var s = stat[sex], pct = function(k){ return s.n ? (100*k/s.n).toFixed(1) + '%' : '-'; };
+    html += '<tr><td><b>' + (sex==='딸' ? '👧 딸' : '👦 아들') + '</b></td><td>' + comma(s.n) + '명</td>'
+          + '<td>' + comma(s.ga) + '명 (' + pct(s.ga) + ')</td>'
+          + '<td>' + comma(s.da) + '명 (' + pct(s.da) + ')</td></tr>';
   });
   document.getElementById('simBody').innerHTML = html;
   document.getElementById('simOut').style.display = 'block';
